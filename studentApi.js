@@ -454,18 +454,13 @@ app.post('/register', (req, res) => {
 
   app.post('/postStudentDetails', (req, res) => {
     const { name, dob, gender, about } = req.body;
-    const id = Students.length + 1;
-  
-    const newStudent = {
-      id,
-      name,
-      dob,
-      gender,
-      about,
-      courses: []
-    };
-    Students.unshift(newStudent);
-    res.send(newStudent);
+    let student=Students.find(f=>f.name==name);
+    if(student){
+      student.dob=dob;
+      student.gender=gender;
+      student.about=about;
+    }
+    res.send(student);
   });
   app.get('/getStudentDetails/:name', (req, res) => {
     const name = req.params.name;
